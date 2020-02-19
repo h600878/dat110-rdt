@@ -6,6 +6,6 @@ public interface IChannelModel {
 	public int delay ();
 	
 	// callback when transmitting a datagram
-	public Datagram process(Datagram datagram);
+	public Datagram process(String str, Datagram datagram);
 	
 }

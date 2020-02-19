@@ -10,8 +10,8 @@ public class Network {
 		srchannel = new Channel("S --> R", chanmodel);
 		rschannel = new Channel("R --> S", chanmodel);
 
-		srns = new NetworkService("Network service S->R", srchannel, rschannel);
-		rsns = new NetworkService("Network service R->S", rschannel, srchannel);
+		srns = new NetworkService("Network service S->R", rschannel, srchannel);
+		rsns = new NetworkService("Network service R->S", srchannel, rschannel);
 	}
 
 	public NetworkService getSenderService() {

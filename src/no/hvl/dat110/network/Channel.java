@@ -7,9 +7,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Channel {
 
-	protected LinkedBlockingQueue<Datagram> datagramqueue;
-	protected String name;
-	protected IChannelModel chanmodel;
+	private LinkedBlockingQueue<Datagram> datagramqueue;
+	private String name;
+	private IChannelModel chanmodel;
 
 	public Channel(String name, IChannelModel chanmodel) {
 		this.name = name;
@@ -32,10 +32,7 @@ public class Channel {
 
 		return data;
 	}
-	private String getNetwork() {
-		return name;
-	}
-
+	
 	class DelayDatagram extends TimerTask {
 
 		private Datagram datagram;
@@ -48,7 +45,7 @@ public class Channel {
 
 			try {
 				
-				System.out.println("[Network:" + getNetwork() + "] delayed arrival: " + datagram.toString());
+				System.out.println("[Network:" + name + "] delayed arrival: " + datagram.toString());
 				
 				datagramqueue.put(datagram);
 				
@@ -63,9 +60,7 @@ public class Channel {
 
 	public void transmit(Datagram datagram) {
 
-		System.out.print("[Network: " + name + "   ] transmit: " + datagram.toString());
-
-		datagram = chanmodel.process(datagram);
+		datagram = chanmodel.process(name,datagram);
 
 		if (datagram != null) {
 
@@ -89,7 +84,5 @@ public class Channel {
 				}
 			}
 		} 
-		
-		System.out.println();
 	}
 }

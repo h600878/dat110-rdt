@@ -9,9 +9,10 @@ public class RDT1PerfectChannel implements IChannelModel {
 		return 0;
 	}
 	
-	public Datagram process(Datagram datagram) {
+	public Datagram process(String name, Datagram datagram) {
 		
-		System.out.print("+");
+		System.out.println("[Network:" + name + "+   ] transmit: " + datagram.toString());
+		
 		return datagram;
 	}
 }
