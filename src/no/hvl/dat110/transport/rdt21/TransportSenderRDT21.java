@@ -3,6 +3,7 @@ package no.hvl.dat110.transport.rdt21;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
 import no.hvl.dat110.transport.rdt2.SegmentType;
 
@@ -15,8 +16,8 @@ public class TransportSenderRDT21 extends TransportSender implements ITransportP
 	private LinkedBlockingQueue<SegmentRDT21> recvqueue;
 	private RDT21SenderStates state;
 
-	public TransportSenderRDT21() {
-		super("TransportSender");
+	public TransportSenderRDT21(NetworkService ns) {
+		super("TransportSender",ns);
 		recvqueue = new LinkedBlockingQueue<SegmentRDT21>();
 		state = RDT21SenderStates.WAITDATA0;
 	}
@@ -113,7 +114,7 @@ public class TransportSenderRDT21 extends TransportSender implements ITransportP
 
 				if (!acksegment.isCorrect()) {
 
-					System.out.println("[Transport:Sender   ] CRP");
+					System.out.println("[Transport:Sender   ] BITERRORS");
 					udt_send(new SegmentRDT21(data, seqnr)); // retransmit
 
 				} else if (type == SegmentType.NAK) {

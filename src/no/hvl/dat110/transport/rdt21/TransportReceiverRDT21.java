@@ -2,6 +2,7 @@ package no.hvl.dat110.transport.rdt21;
 
 import java.util.concurrent.TimeUnit;
 
+import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
 import no.hvl.dat110.transport.rdt2.SegmentType;
 
@@ -13,8 +14,8 @@ public class TransportReceiverRDT21 extends TransportReceiver implements ITransp
 	
 	private RDT21ReceiverStates state;
 
-	public TransportReceiverRDT21() {
-		super("TransportReceiver");
+	public TransportReceiverRDT21(NetworkService ns) {
+		super("TransportReceiver",ns);
 		state = RDT21ReceiverStates.WAITING0;
 	}
 		
@@ -30,10 +31,10 @@ public class TransportReceiverRDT21 extends TransportReceiver implements ITransp
 		
 		try {
 	
-			segment = (SegmentRDT21)insegqueue.poll(2, TimeUnit.SECONDS);
+			segment = (SegmentRDT21)insegmentqueue.poll(2, TimeUnit.SECONDS);
 
 		} catch (InterruptedException ex) {
-			System.out.println("TransportReceiver RDT2 - doProcess " + ex.getMessage());
+			System.out.println("TransportReceiver RDT2 - doWaiting " + ex.getMessage());
 			ex.printStackTrace();
 		}
 		
@@ -58,7 +59,7 @@ public class TransportReceiverRDT21 extends TransportReceiver implements ITransp
 				// send an ack to the sender
 				udt_send(new SegmentRDT21(SegmentType.ACK));
 			} else {
-				
+				System.out.println("[Transport:Receiver ] BITERRORS");
 				udt_send(new SegmentRDT21(SegmentType.NAK));
 				
 			}
