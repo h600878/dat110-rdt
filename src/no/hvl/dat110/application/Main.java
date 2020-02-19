@@ -33,17 +33,23 @@ public class Main {
 			
 			tsender.doStop();
 			treceiver.doStop();
-			
 			network.doStop();
 			
-			//TODO: better printout
-			System.out.println(sender.getDatasent());
-			System.out.println(receiver.getDatarecv());
-			
+			tsender.join();
+			treceiver.join();
+						
 		} catch (InterruptedException ex) {
 
 			System.out.println("Main thread " + ex.getMessage());
 			ex.printStackTrace();
 		}
+		
+		System.out.print("Data sent:    ");
+		sender.getDatasent().forEach(barr -> System.out.print(new String(barr) +"|"));
+		
+		System.out.println();
+		System.out.print("Data received:");
+		receiver.getDatarecv().forEach(barr -> System.out.print(new String(barr) + "|"));
+		System.out.println();
 	}
 }
