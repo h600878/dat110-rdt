@@ -24,12 +24,13 @@ public class SenderProcess {
 
 			String message = "Message " + (Integer.toString(i));
 
-			System.out.println("[App:SenderProcess  ] rdt_send: " + message);
+			System.out.println("[App:SenderProcess  ] rdt_send: " + "[" + message + "]");
 
 			byte[] data = message.getBytes();
+			
 			transport.rdt_send(data);
+			
 			datasent.add(data);
-
 		}
 	}
 

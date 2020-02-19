@@ -3,7 +3,7 @@ package no.hvl.dat110.network;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import no.hvl.dat110.transport.Stopable;
+import no.hvl.dat110.common.Stopable;
 
 public class Channel extends Stopable {
 

@@ -22,8 +22,8 @@ public class ReceiverProcess {
 
 		datarecv.add(data);
 
-		String str = new String(data);
+		String message = new String(data);
 
-		System.out.println("[App:ReceiverProcess] dlv_data: " + str);
+		System.out.println("[App:ReceiverProcess] dlv_data: " + "[" + message + "]");
 	}
 }

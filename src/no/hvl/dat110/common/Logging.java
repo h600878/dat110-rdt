@@ -1,4 +1,4 @@
-package no.hvl.dat110.application;
+package no.hvl.dat110.common;
 
 public class Logging {
 

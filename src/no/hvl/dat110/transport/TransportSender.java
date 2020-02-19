@@ -2,6 +2,7 @@ package no.hvl.dat110.transport;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+import no.hvl.dat110.common.Stopable;
 import no.hvl.dat110.network.Datagram;
 import no.hvl.dat110.network.NetworkService;
 

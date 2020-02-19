@@ -10,17 +10,20 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		// setup the network
 		Network network = new Network(new Adversary());
 		network.doRun();
 		
+		// setup and start the transport protocol entities
 		TransportSenderRDT1 tsender = new TransportSenderRDT1();
-		tsender.register(network.getService(0)); 
+		tsender.register(network.getService(0)); // TODO move into constructor? 
 		TransportReceiverRDT1 treceiver = new TransportReceiverRDT1();
-		treceiver.register(network.getService(1));
+		treceiver.register(network.getService(1)); // TODO move into constructor?
 		
 		tsender.start();
 		treceiver.start();
 		
+		// setup and start the application level sender and receiver processes 
 		SenderProcess sender = new SenderProcess(tsender);
 		ReceiverProcess receiver = new ReceiverProcess(treceiver);
 		
