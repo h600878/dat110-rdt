@@ -5,14 +5,14 @@ import java.util.concurrent.TimeUnit;
 
 import no.hvl.dat110.common.Stopable;
 
-public class Channel extends Stopable {
+public class Channel {
 
 	protected LinkedBlockingQueue<Datagram> datagramqueue;
-
+	protected String name;
 	protected IAdversary observer;
 	
 	public Channel(String name, IAdversary observer) {
-		super(name);
+		this.name = name;
 		datagramqueue = new LinkedBlockingQueue<Datagram>();
 		this.observer = observer;
 	}
@@ -21,12 +21,10 @@ public class Channel extends Stopable {
 
 		try {
 			
-			System.out.print("[Network:"+super.name+ "] transmit: " + datagram.toString());
+			System.out.print("[Network:"+name+ "] transmit: " + datagram.toString());
 			
 			datagram = observer.process(datagram);
-			
-			// System.out.println();
-			
+						
 			if (datagram != null) {
 				datagramqueue.put(datagram);
 			}
@@ -54,16 +52,5 @@ public class Channel extends Stopable {
 		}
 
 		return data;
-	}
-
-	public void doProcess() {
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException ex) {
-
-			System.out.println("Channel thread " + ex.getMessage());
-			ex.printStackTrace();
-		}
 	}
 }

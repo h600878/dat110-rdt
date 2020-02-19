@@ -1,6 +1,5 @@
 package no.hvl.dat110.network;
 
-
 public class Network {
 
 	private Channel[] channels;
@@ -26,10 +25,7 @@ public class Network {
 	public void doRun() {
 		
 		System.out.println("Network starting");
-		
-		channels[0].start();
-		channels[1].start();
-		
+				
 		networkservices[0].start();
 		networkservices[1].start();
 	}
@@ -43,12 +39,6 @@ public class Network {
 		
 		networkservices[1].doStop();
 		networkservices[1].join();
-		
-		channels[0].doStop();
-		channels[0].join();
-		
-		channels[1].doStop();
-		channels[1].join();
 		
 		} catch (InterruptedException ex) {
 
