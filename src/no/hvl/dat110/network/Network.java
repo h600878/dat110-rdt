@@ -9,8 +9,8 @@ public class Network {
 		
 		channels = new Channel[2];
 		
-		channels[0] = new DelayChannel("Channel R>S",observer);
-		channels[1] = new DelayChannel("Channel S>R",observer);
+		channels[0] = new Channel("Channel R>S",observer);
+		channels[1] = new Channel("Channel S>R",observer);
 		
 		networkservices = new NetworkService[2];
 		
