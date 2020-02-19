@@ -1,7 +1,7 @@
 package no.hvl.dat110.application;
 
 import no.hvl.dat110.network.Network;
-import no.hvl.dat110.network.models.RDT1PerfectChannel;
+import no.hvl.dat110.network.models.RDT1ReliableChannel;
 import no.hvl.dat110.transport.*;
 import no.hvl.dat110.transport.rdt1.TransportReceiverRDT1;
 import no.hvl.dat110.transport.rdt1.TransportSenderRDT1;
@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		// setup the network
-		Network network = new Network(new RDT1PerfectChannel());
+		Network network = new Network(new RDT1ReliableChannel());
 		network.doRun();
 		
 		// setup and start the transport protocol entities

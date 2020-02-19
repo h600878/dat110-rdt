@@ -2,7 +2,7 @@ package no.hvl.dat110.transport.rdt3;
 
 import no.hvl.dat110.network.Datagram;
 import no.hvl.dat110.network.IChannelModel;
-import no.hvl.dat110.transport.rdt2.SegmentRDT21;;
+import no.hvl.dat110.transport.rdt21.SegmentRDT21;;
 
 public class AdversaryRDT3 implements IChannelModel {
 

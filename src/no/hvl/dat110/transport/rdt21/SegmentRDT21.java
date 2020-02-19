@@ -1,4 +1,7 @@
-package no.hvl.dat110.transport.rdt2;
+package no.hvl.dat110.transport.rdt21;
+
+import no.hvl.dat110.transport.rdt2.SegmentRDT2;
+import no.hvl.dat110.transport.rdt2.SegmentType;
 
 public class SegmentRDT21 extends SegmentRDT2 {
 

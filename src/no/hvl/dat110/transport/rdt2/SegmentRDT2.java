@@ -38,6 +38,10 @@ public class SegmentRDT2 extends Segment {
 		return segment;
 	}
 
+	public boolean isData() {
+		return type == SegmentType.DATA;
+	}
+	
 	public SegmentType getType() {
 		return type;
 	}
@@ -49,7 +53,7 @@ public class SegmentRDT2 extends Segment {
 
 		str = str + super.toString();
 
-		str = str + String.format("%8s", Integer.toBinaryString(checksum));
+		str = str + "["+ (String.format("%8s", Integer.toBinaryString(checksum & 0xFF).replace(' ', '0'))) + "]";
 
 		return str;
 
@@ -76,5 +80,9 @@ public class SegmentRDT2 extends Segment {
 	// used by channel to simulate transmission error
 	public void setChecksum(byte checksum) {
 		this.checksum = checksum;
+	}
+	
+	public byte getChecksum() {
+		return this.checksum;
 	}
 }

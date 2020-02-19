@@ -3,8 +3,8 @@ package no.hvl.dat110.transport.rdt2;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
-import no.hvl.dat110.transport.rdt2.TransportSenderRDT21.RDT21SenderStates;
 
 public class TransportSenderRDT2 extends TransportSender implements ITransportProtocolEntity {
 
@@ -15,15 +15,15 @@ public class TransportSenderRDT2 extends TransportSender implements ITransportPr
 	private LinkedBlockingQueue<SegmentRDT2> recvqueue;
 	private RDT2SenderStates state;
 
-	public TransportSenderRDT2() {
-		super("TransportSender");
+	public TransportSenderRDT2(NetworkService ns) {
+		super("TransportSender",ns);
 		recvqueue = new LinkedBlockingQueue<SegmentRDT2>();
 		state = RDT2SenderStates.WAITDATA;
 	}
 
 	public void rdt_recv(Segment segment) {
 
-		System.out.println("[Transport:Receiver ] rdt_recv: " + segment.toString());
+		System.out.println("[Transport:Sender   ] rdt_recv: " + segment.toString());
 
 		try {
 			
