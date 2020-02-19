@@ -9,12 +9,12 @@ public class Channel {
 
 	protected LinkedBlockingQueue<Datagram> datagramqueue;
 	protected String name;
-	protected IChannelModel adversary;
+	protected IChannelModel chanmodel;
 
-	public Channel(String name, IChannelModel adversary) {
+	public Channel(String name, IChannelModel chanmodel) {
 		this.name = name;
 		datagramqueue = new LinkedBlockingQueue<Datagram>();
-		this.adversary = adversary;
+		this.chanmodel = chanmodel;
 	}
 	
 	public Datagram receive() {
@@ -61,15 +61,15 @@ public class Channel {
 		}
 	}
 
-	public void send(Datagram datagram) {
+	public void transmit(Datagram datagram) {
 
 		System.out.print("[Network: " + name + "   ] transmit: " + datagram.toString());
 
-		datagram = adversary.process(datagram);
+		datagram = chanmodel.process(datagram);
 
 		if (datagram != null) {
 
-			int delay = adversary.delay();
+			int delay = chanmodel.delay();
 			
 			if (delay > 0) {
 

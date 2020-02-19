@@ -2,9 +2,10 @@ package no.hvl.dat110.network;
 
 public interface IChannelModel {
 
-	// msecs to delay packet
+	// millseconds to delay packet 
 	public int delay ();
 	
+	// callback when transmitting a datagram
 	public Datagram process(Datagram datagram);
 	
 }

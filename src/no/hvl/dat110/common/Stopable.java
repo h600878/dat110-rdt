@@ -13,7 +13,7 @@ public abstract class Stopable extends Thread {
 		stop = true;
 	}
 
-	public synchronized boolean doCont() {
+	private synchronized boolean doCont() {
 		return !stop;
 
 	}

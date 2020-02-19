@@ -16,10 +16,8 @@ public class Main {
 		
 		// setup and start the transport protocol entities
 		TransportSenderRDT1 tsender = new TransportSenderRDT1(network.getSenderService());
-		// tsender.register(network.getSenderService()); // TODO move into constructor? 
 		TransportReceiverRDT1 treceiver = new TransportReceiverRDT1(network.getReceiverService());
-		// treceiver.register(network.getReceiverService()); // TODO move into constructor?
-		
+
 		tsender.start();
 		treceiver.start();
 		
@@ -37,6 +35,10 @@ public class Main {
 			treceiver.doStop();
 			
 			network.doStop();
+			
+			//TODO: better printout
+			System.out.println(sender.getDatasent());
+			System.out.println(receiver.getDatarecv());
 			
 		} catch (InterruptedException ex) {
 
