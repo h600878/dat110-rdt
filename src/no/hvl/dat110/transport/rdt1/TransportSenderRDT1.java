@@ -1,16 +1,14 @@
 package no.hvl.dat110.transport.rdt1;
 
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
 
 public class TransportSenderRDT1 extends TransportSender implements ITransportProtocolEntity {
 
-	
-
-	public TransportSenderRDT1() {
-		super("TransportSender");
+	public TransportSenderRDT1(NetworkService ns) {
+		super("TransportSender",ns);
 	}
 		
 	public void rdt_recv(Segment segment) {

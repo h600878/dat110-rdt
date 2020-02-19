@@ -14,9 +14,11 @@ public abstract class TransportReceiver extends Stopable implements ITransportPr
 
 	protected LinkedBlockingQueue<Segment> insegqueue;
 
-	public TransportReceiver(String name) {
+	public TransportReceiver(String name,NetworkService ns) {
 		super(name);
 		insegqueue = new LinkedBlockingQueue<Segment>();
+		ns.register(this);
+		this.ns = ns;
 
 	}
 

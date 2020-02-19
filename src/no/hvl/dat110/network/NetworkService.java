@@ -38,7 +38,7 @@ public class NetworkService extends Stopable {
 			if (datagram != null) {
 				rdt_recv(datagram);
 			} else {
-				// System.out.println("timeout");
+				// System.out.println("timeout"); // TODO raise exception
 			}
 		} 
 }

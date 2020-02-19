@@ -63,7 +63,7 @@ public class Channel {
 
 	public void send(Datagram datagram) {
 
-		System.out.print("[Network:" + name + "] transmit: " + datagram.toString());
+		System.out.print("[Network: " + name + "   ] transmit: " + datagram.toString());
 
 		datagram = adversary.process(datagram);
 

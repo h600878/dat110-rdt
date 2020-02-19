@@ -2,43 +2,43 @@ package no.hvl.dat110.network;
 
 public class Network {
 
-	private Channel[] channels;
-	private NetworkService[] networkservices;
+	private Channel srchannel,rschannel;
+	private NetworkService srns, rsns;
 	
-	public Network (IChannelModel observer) {
+	public Network (IChannelModel chanmodel) {
+	
+		srchannel = new Channel("S --> R",chanmodel);
+		rschannel = new Channel("R --> S",chanmodel);
 		
-		channels = new Channel[2];
-		
-		channels[0] = new Channel("Channel R>S",observer);
-		channels[1] = new Channel("Channel S>R",observer);
-		
-		networkservices = new NetworkService[2];
-		
-		networkservices[0] = new NetworkService("Network service 0",channels[0],channels[1]);
-		networkservices[1] = new NetworkService("Network service 1",channels[1],channels[0]);
+		srns = new NetworkService("Network service S->R",srchannel,rschannel);
+		rsns = new NetworkService("Network service R->S",rschannel,srchannel);
 	}
 	
-	public NetworkService getService(int i) {
-		return networkservices[i];
+	public NetworkService getSenderService() {
+		return srns;
+	}
+	
+	public NetworkService getReceiverService() {
+		return rsns;
 	}
 	
 	public void doRun() {
 		
 		System.out.println("Network starting");
 				
-		networkservices[0].start();
-		networkservices[1].start();
+		srns.start();
+		rsns.start();
 	}
 	
 	public void doStop() {
 	
 		try {
 			
-		networkservices[0].doStop();
-		networkservices[0].join();
+		srns.doStop();
+		srns.join();
 		
-		networkservices[1].doStop();
-		networkservices[1].join();
+		rsns.doStop();
+		srns.join();
 		
 		} catch (InterruptedException ex) {
 

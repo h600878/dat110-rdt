@@ -11,9 +11,11 @@ public abstract class TransportSender extends Stopable implements ITransportProt
 	protected LinkedBlockingQueue<byte[]> outdataqueue;
 	private NetworkService ns;
 	
-	public TransportSender(String name) {
+	public TransportSender(String name,NetworkService ns) {
 		super(name);
 		outdataqueue = new LinkedBlockingQueue<byte[]>();
+		this.ns = ns;
+		ns.register(this);
 	}
 
 	public void register(NetworkService ns) {
