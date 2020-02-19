@@ -3,7 +3,6 @@ package no.hvl.dat110.transport.rdt1;
 import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
 
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class TransportReceiverRDT1 extends TransportReceiver implements ITransportProtocolEntity {
@@ -16,14 +15,14 @@ public class TransportReceiverRDT1 extends TransportReceiver implements ITranspo
 
 		try {
 			
-			Segment segment = insegqueue.poll(2, TimeUnit.SECONDS);
+			Segment segment = insegmentqueue.poll(2, TimeUnit.SECONDS);
 
 			if (segment != null) {
 				deliver_data(segment.getData());
 			}
 			
 		} catch (InterruptedException ex) {
-			System.out.println("Transport receiver - deliver data " + ex.getMessage());
+			System.out.println("Transport receiver RDT1 - doProcess " + ex.getMessage());
 			ex.printStackTrace();
 		}
 

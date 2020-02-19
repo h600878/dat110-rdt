@@ -12,19 +12,14 @@ public abstract class TransportReceiver extends Stopable implements ITransportPr
 	private ReceiverProcess receiver;
 	private NetworkService ns;
 
-	protected LinkedBlockingQueue<Segment> insegqueue;
+	protected LinkedBlockingQueue<Segment> insegmentqueue;
 
-	public TransportReceiver(String name,NetworkService ns) {
+	public TransportReceiver(String name, NetworkService ns) {
 		super(name);
-		insegqueue = new LinkedBlockingQueue<Segment>();
+		insegmentqueue = new LinkedBlockingQueue<Segment>();
 		ns.register(this);
 		this.ns = ns;
 
-	}
-
-	public void register(NetworkService ns) {
-		ns.register(this);
-		this.ns = ns;
 	}
 
 	public void register(ReceiverProcess receiver) {
@@ -33,29 +28,28 @@ public abstract class TransportReceiver extends Stopable implements ITransportPr
 
 	public final void rdt_send(byte[] data) {
 
-		// should never used in the current setting
+		// should never used in the current setting in the receiver
 		throw new RuntimeException("rdt_send called in transport receiver");
 	}
 
-	// udt_send should always just deliver the data to the receiver
+	// deliver_data should always deliver the data to the application layer receiver
 	public final void deliver_data(byte[] data) {
 		receiver.deliver_data(data);
 	}
 
-	// udt_send should always just send the segment via the underlying network
-	// service
+	// udt_send should always send the segment via the underlying network service
 	public final void udt_send(Segment segment) {
 		System.out.println("[Transport:Receiver ] udt_send: " + segment.toString());
 		ns.udt_send(new Datagram(segment));
 	}
 
-	// network service will call this method when segments arrive
+	// underlying network service will call this method when segments arrive
 	public final void rdt_recv(Segment segment) {
 
 		System.out.println("[Transport:Receiver ] rdt_recv: " + segment.toString());
 
 		try {
-			insegqueue.put(segment);
+			insegmentqueue.put(segment);
 		} catch (InterruptedException ex) {
 
 			System.out.println("Transport receiver  " + ex.getMessage());

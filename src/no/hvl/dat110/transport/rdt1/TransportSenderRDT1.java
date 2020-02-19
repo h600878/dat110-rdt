@@ -27,7 +27,7 @@ public class TransportSenderRDT1 extends TransportSender implements ITransportPr
 			}
 
 		} catch (InterruptedException ex) {
-			System.out.println("Transport sender thread " + ex.getMessage());
+			System.out.println("Transport sender RDT1 thread " + ex.getMessage());
 			ex.printStackTrace();
 		}
 

@@ -17,11 +17,6 @@ public abstract class TransportSender extends Stopable implements ITransportProt
 		this.ns = ns;
 		ns.register(this);
 	}
-
-	public void register(NetworkService ns) {
-		this.ns = ns;
-		ns.register(this);
-	}
 	
 	public final void rdt_send(byte[] data) {
 
@@ -37,11 +32,11 @@ public abstract class TransportSender extends Stopable implements ITransportProt
 	
 	public final void deliver_data(byte[] data) {
 
-		// should never be called in the current setting
+		// should never be called in the current setting in the sender
 		throw new RuntimeException("deliver_data called in transport sender");
 	}
 	
-	// udt_send should always just send the segment via the underlying network service
+	// udt_send should always send the segment via the underlying network service
 	public final void udt_send(Segment segment) {
 		System.out.println("[Transport:Sender   ] udt_send: " + segment.toString());
 		ns.udt_send(new Datagram(segment));
