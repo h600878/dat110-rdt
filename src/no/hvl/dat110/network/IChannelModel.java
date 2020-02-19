@@ -1,6 +1,6 @@
 package no.hvl.dat110.network;
 
-public interface IAdversary {
+public interface IChannelModel {
 
 	// msecs to delay packet
 	public int delay ();

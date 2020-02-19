@@ -9,9 +9,9 @@ public class Channel {
 
 	protected LinkedBlockingQueue<Datagram> datagramqueue;
 	protected String name;
-	protected IAdversary adversary;
+	protected IChannelModel adversary;
 
-	public Channel(String name, IAdversary adversary) {
+	public Channel(String name, IChannelModel adversary) {
 		this.name = name;
 		datagramqueue = new LinkedBlockingQueue<Datagram>();
 		this.adversary = adversary;

@@ -5,7 +5,7 @@ public class Network {
 	private Channel[] channels;
 	private NetworkService[] networkservices;
 	
-	public Network (IAdversary observer) {
+	public Network (IChannelModel observer) {
 		
 		channels = new Channel[2];
 		

@@ -1,10 +1,10 @@
 package no.hvl.dat110.transport.rdt3;
 
 import no.hvl.dat110.network.Datagram;
-import no.hvl.dat110.network.IAdversary;
+import no.hvl.dat110.network.IChannelModel;
 import no.hvl.dat110.transport.rdt2.SegmentRDT21;;
 
-public class AdversaryRDT3 implements IAdversary {
+public class AdversaryRDT3 implements IChannelModel {
 
 	private static double CORRUPTPB = 0.2;
 	private static double LOSSPB = 0.2;

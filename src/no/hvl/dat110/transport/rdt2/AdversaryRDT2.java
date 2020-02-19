@@ -1,9 +1,9 @@
 package no.hvl.dat110.transport.rdt2;
 
 import no.hvl.dat110.network.Datagram;
-import no.hvl.dat110.network.IAdversary;
+import no.hvl.dat110.network.IChannelModel;
 
-public class AdversaryRDT2 implements IAdversary {
+public class AdversaryRDT2 implements IChannelModel {
 
 	private static double CORRUPTPB = 0.4;
 	
