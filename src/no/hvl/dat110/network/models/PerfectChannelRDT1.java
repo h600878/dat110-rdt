@@ -1,9 +1,9 @@
-package no.hvl.dat110.transport.rdt1;
+package no.hvl.dat110.network.models;
 
 import no.hvl.dat110.network.Datagram;
 import no.hvl.dat110.network.IChannelModel;
 
-public class Adversary implements IChannelModel {
+public class PerfectChannelRDT1 implements IChannelModel {
 
 	public int delay () {
 		return 0;

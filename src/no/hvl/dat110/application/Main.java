@@ -1,8 +1,8 @@
 package no.hvl.dat110.application;
 
 import no.hvl.dat110.network.Network;
+import no.hvl.dat110.network.models.PerfectChannelRDT1;
 import no.hvl.dat110.transport.*;
-import no.hvl.dat110.transport.rdt1.Adversary;
 import no.hvl.dat110.transport.rdt1.TransportReceiverRDT1;
 import no.hvl.dat110.transport.rdt1.TransportSenderRDT1;
 
@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		// setup the network
-		Network network = new Network(new Adversary());
+		Network network = new Network(new PerfectChannelRDT1());
 		network.doRun();
 		
 		// setup and start the transport protocol entities
