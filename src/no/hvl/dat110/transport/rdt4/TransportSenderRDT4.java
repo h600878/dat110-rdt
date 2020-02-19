@@ -4,6 +4,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import no.hvl.dat110.transport.Segment;
 import no.hvl.dat110.transport.rdt3.SegmentRDT3;
+import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.ITransportProtocolEntity;
 import no.hvl.dat110.transport.TransportSender;
 
@@ -13,8 +14,8 @@ public class TransportSenderRDT4 extends TransportSender implements ITransportPr
 	    
 	    // TODO
 	    
-		public TransportSenderRDT4() {
-			super("TransportSender");
+		public TransportSenderRDT4(NetworkService ns) {
+			super("TransportSender",ns);
 			recvqueue = new LinkedBlockingQueue<SegmentRDT3>();
 			
 			// TODO

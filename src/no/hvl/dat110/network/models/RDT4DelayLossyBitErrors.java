@@ -1,9 +1,8 @@
-package no.hvl.dat110.transport.rdt4;
+package no.hvl.dat110.network.models;
 
 import no.hvl.dat110.network.Datagram;
-import no.hvl.dat110.network.models.RDT3LossyBitErrors;
 
-public class AdversaryRDT4 extends RDT3LossyBitErrors {
+public class RDT4DelayLossyBitErrors extends RDT3LossyBitErrors {
 	
 	private static double DELAYPB = 0.2;
 	private static int DELAYLIMIT = 1000;
@@ -22,7 +21,7 @@ public class AdversaryRDT4 extends RDT3LossyBitErrors {
 		return delay;
 	}
 	
-	public Datagram process (Datagram datagram) {
-		return (super.process(datagram));
+	public Datagram process (String name, Datagram datagram) {
+		return (super.process(name,datagram));
 	}
 }
