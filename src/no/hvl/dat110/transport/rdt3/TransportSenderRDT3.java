@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
 import no.hvl.dat110.transport.rdt2.SegmentType;
 
@@ -18,8 +19,8 @@ public class TransportSenderRDT3 extends TransportSender implements ITransportPr
 	private LinkedBlockingQueue<SegmentRDT3> recvqueue;
 	private RDT3SenderStates state;
 
-	public TransportSenderRDT3() {
-		super("TransportSender");
+	public TransportSenderRDT3(NetworkService ns) {
+		super("TransportSender",ns);
 		recvqueue = new LinkedBlockingQueue<SegmentRDT3>();
 		state = RDT3SenderStates.WAITDATA0;
 		timeout = false;

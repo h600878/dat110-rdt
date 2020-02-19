@@ -16,7 +16,7 @@ public class Channel {
 		datagramqueue = new LinkedBlockingQueue<Datagram>();
 		this.chanmodel = chanmodel;
 	}
-	
+
 	public Datagram receive() {
 
 		Datagram data = null;
@@ -32,7 +32,7 @@ public class Channel {
 
 		return data;
 	}
-	
+
 	class DelayDatagram extends TimerTask {
 
 		private Datagram datagram;
@@ -44,11 +44,11 @@ public class Channel {
 		public void run() {
 
 			try {
-				
+
 				System.out.println("[Network:" + name + "] delayed arrival: " + datagram.toString());
-				
+
 				datagramqueue.put(datagram);
-				
+
 			} catch (InterruptedException ex) {
 
 				System.out.println("Delay channel send " + ex.getMessage());
@@ -60,12 +60,14 @@ public class Channel {
 
 	public void transmit(Datagram datagram) {
 
-		datagram = chanmodel.process(name,datagram);
+		if (datagram != null) {
+			datagram = chanmodel.process(name, datagram);
+		}
 
 		if (datagram != null) {
 
 			int delay = chanmodel.delay();
-			
+
 			if (delay > 0) {
 
 				Timer timer = new Timer();
@@ -83,6 +85,6 @@ public class Channel {
 					ex.printStackTrace();
 				}
 			}
-		} 
+		}
 	}
 }

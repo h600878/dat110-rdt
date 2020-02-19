@@ -18,7 +18,6 @@ public class RDT2DataBitErrors implements IChannelModel {
 		
 		if (segment.isData() && Math.random() < CORRUPTPB) {
 			
-			// 0 is not in general correct checksum for data
 			segment.setChecksum((byte)(~(segment.getChecksum()))); 
 			
 			System.out.println("[Network:" + name + "*   ] transmit: " + datagram.toString());

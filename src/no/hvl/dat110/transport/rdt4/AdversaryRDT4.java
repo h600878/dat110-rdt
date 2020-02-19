@@ -1,9 +1,9 @@
 package no.hvl.dat110.transport.rdt4;
 
 import no.hvl.dat110.network.Datagram;
-import no.hvl.dat110.transport.rdt3.AdversaryRDT3;
+import no.hvl.dat110.network.models.RDT3LossyBitErrors;
 
-public class AdversaryRDT4 extends AdversaryRDT3 {
+public class AdversaryRDT4 extends RDT3LossyBitErrors {
 	
 	private static double DELAYPB = 0.2;
 	private static int DELAYLIMIT = 1000;

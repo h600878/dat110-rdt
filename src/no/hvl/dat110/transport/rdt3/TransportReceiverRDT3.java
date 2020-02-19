@@ -2,6 +2,7 @@ package no.hvl.dat110.transport.rdt3;
 
 import java.util.concurrent.TimeUnit;
 
+import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
 import no.hvl.dat110.transport.rdt2.SegmentType;
 
@@ -13,8 +14,8 @@ public class TransportReceiverRDT3 extends TransportReceiver implements ITranspo
 	
 	private RDT3ReceiverStates state;
 	
-	public TransportReceiverRDT3() {
-		super("TransportReceiver");
+	public TransportReceiverRDT3(NetworkService ns) {
+		super("TransportReceiver",ns);
 		state = RDT3ReceiverStates.WAITING0;
 	}
 	
@@ -30,7 +31,7 @@ public class TransportReceiverRDT3 extends TransportReceiver implements ITranspo
 		
 		try {
 	
-			segment = (SegmentRDT3)insegqueue.poll(2, TimeUnit.SECONDS);
+			segment = (SegmentRDT3)insegmentqueue.poll(2, TimeUnit.SECONDS);
 
 		} catch (InterruptedException ex) {
 			System.out.println("TransportReceiver RDT3 - doProcess " + ex.getMessage());
