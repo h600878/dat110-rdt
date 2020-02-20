@@ -1,14 +1,10 @@
 package no.hvl.dat110.transport.rdt3;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import no.hvl.dat110.network.NetworkService;
 import no.hvl.dat110.transport.*;
-import no.hvl.dat110.transport.rdt2.SegmentType;
 
 public class TransportSenderRDT3 extends TransportSender implements ITransportProtocolEntity {
 
@@ -19,11 +15,14 @@ public class TransportSenderRDT3 extends TransportSender implements ITransportPr
 	private LinkedBlockingQueue<SegmentRDT3> recvqueue;
 	private RDT3SenderStates state;
 
+    // flag indicating whether a timeout has occurred
+	private RetransmissionTimer retranstimer;
+
 	public TransportSenderRDT3(NetworkService ns) {
 		super("TransportSender",ns);
 		recvqueue = new LinkedBlockingQueue<SegmentRDT3>();
 		state = RDT3SenderStates.WAITDATA0;
-		timeout = false;
+		retranstimer = new RetransmissionTimer();
 	}
 
 	public void rdt_recv(Segment segment) {
@@ -82,30 +81,6 @@ public class TransportSenderRDT3 extends TransportSender implements ITransportPr
 		state = newstate;
 	}
 
-	// TODO: consider moving retransmission timer into seperate file
-	private boolean timeout;
-	private Timer timer;
-
-	private void stop_timer() {
-		timer.cancel();
-		timeout = false;
-	}
-	
-	public void start_timer() {
-		timer = new Timer(); 
-		timer.schedule(new TimeOutTask(), 1000);
-		timeout = false;
-	}
-	
-    class TimeOutTask extends TimerTask {
-    	
-        public void run() {
-            System.out.println("[Transport:Sender   ] TIMEOUT");
-            timer.cancel(); 
-            timeout = true;
-        }
-    }
-    
 	private void doWaitData(int seqnr) {
 
 		try {
@@ -116,7 +91,7 @@ public class TransportSenderRDT3 extends TransportSender implements ITransportPr
 
 				udt_send(new SegmentRDT3(data, seqnr));
 
-				start_timer();
+				retranstimer.start();
 
 				if (seqnr == 0) {
 					changeState(RDT3SenderStates.WAITACK0);
@@ -148,13 +123,13 @@ public class TransportSenderRDT3 extends TransportSender implements ITransportPr
 
 	private void doWaitAck(int seqnr) {
 
-		if (timeout) {
+		if (retranstimer.timeout()) {
 			
 			System.out.println("[Transport:Sender   ] RETRANSMIT ");
 			
 			udt_send(new SegmentRDT3(data, seqnr)); // retransmit
 
-			start_timer();
+			retranstimer.start();
 		}
 
 		try {
@@ -165,7 +140,7 @@ public class TransportSenderRDT3 extends TransportSender implements ITransportPr
 
 				if (acksegment.isCorrect() && (acksegment.getSeqnr() == seqnr)) {
 
-					stop_timer();
+					retranstimer.stop();
 					
 					System.out.println("[Transport:Sender   ] ACK");
 
