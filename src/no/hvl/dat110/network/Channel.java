@@ -36,22 +36,24 @@ public class Channel {
 	class DelayDatagram extends TimerTask {
 
 		private Datagram datagram;
-
-		public DelayDatagram(Datagram datagram) {
+        private int delay;
+        
+		public DelayDatagram(Datagram datagram,int delay) {
 			this.datagram = datagram;
+			this.delay = delay;
 		}
 
 		public void run() {
 
 			try {
 
-				System.out.println("[Network:" + name + "] delayed arrival: " + datagram.toString());
+				System.out.println("[Network:" + name + "o   ]" + String.format("%9s"," delay(" + delay + "):") + datagram.toString());
 
 				datagramqueue.put(datagram);
 
 			} catch (InterruptedException ex) {
 
-				System.out.println("Delay channel send " + ex.getMessage());
+				System.out.println("Delay channel run " + ex.getMessage());
 				ex.printStackTrace();
 			}
 
@@ -71,7 +73,7 @@ public class Channel {
 			if (delay > 0) {
 
 				Timer timer = new Timer();
-				timer.schedule(new DelayDatagram(datagram), delay);
+				timer.schedule(new DelayDatagram(datagram,delay), delay);
 
 			} else {
 

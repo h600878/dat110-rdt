@@ -13,9 +13,6 @@ public class RDT4DelayLossyBitErrors extends RDT3LossyBitErrors {
 		
 		if (Math.random() <= DELAYPB) {
 			delay = (int)(DELAYLIMIT * Math.random());
-			System.out.print("<" + delay);
-		} else {
-			System.out.print(">");
 		}
 		
 		return delay;
