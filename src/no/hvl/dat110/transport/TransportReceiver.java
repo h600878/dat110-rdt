@@ -25,7 +25,7 @@ public abstract class TransportReceiver extends Stopable implements ITransportPr
 	public void register(ReceiverProcess receiver) {
 		this.receiver = receiver;
 	}
-
+	
 	public final void rdt_send(byte[] data) {
 
 		// should never used in the current setting in the receiver

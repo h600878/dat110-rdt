@@ -29,7 +29,7 @@ public class Main {
 		
 		try {
 			
-			Thread.sleep(10000); // allow for reception of outstanding messages
+			Thread.sleep(10000); // allow for reception of messages
 			
 			tsender.doStop();
 			treceiver.doStop();
@@ -48,8 +48,10 @@ public class Main {
 		sender.getDatasent().forEach(barr -> System.out.print(new String(barr) +"|"));
 		
 		System.out.println();
+		
 		System.out.print("Data received:");
 		receiver.getDatarecv().forEach(barr -> System.out.print(new String(barr) + "|"));
+		
 		System.out.println();
 	}
 }
