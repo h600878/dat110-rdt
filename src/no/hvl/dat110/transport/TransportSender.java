@@ -42,4 +42,5 @@ public abstract class TransportSender extends Stopable implements ITransportProt
 		ns.udt_send(new Datagram(segment));
 	}
 
+	public abstract void rdt_recv(Segment segment);
 }
