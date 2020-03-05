@@ -52,7 +52,7 @@ Perform the following experiments
 
 #### Exercise 3 - Handling Corrupt ACK/NAK segments
 
-The `RDT2DataBitErrors.java` class implements a network model that at random sets negates the checksum in the transmitted segment thereby simulating a transmission errors. As a checksum of `0` is the correct checksum for ACK and NAK segments (see Segment-constructors), then this effectively mean that only DATA segments can have transmission errors.
+The `RDT2DataBitErrors.java` class implements a network model that at random sets negates the checksum in the transmitted segment thereby simulating a transmission errors. It tests whether the segment being processed by the network is a DATA segment, and only in that case may a negation of the checksum take place.  
 
 This in turn cause the `doWaiting()` method in `TransportReceiverRDT2.java` to detect that the received segment has a checksum errors and therefore send a NAK segment back to the sender.
 
@@ -60,7 +60,7 @@ Methods for calculating and checking checksums can be found in the `SegmentRDT2.
 
 ##### Exercise 3.1
 
-Modify the implementation of the `SegmentRDT2.java` class such that the correct checksum or ACK/NAK is set to 1. This means that also ACK/NAK may have checksum errors.
+Modify the implementation of the network model in `RDT2DataBitErrors.java` such that also ACK/NAK may be corrupted, i.e., be exposed to transmission errors.
 
 ##### Exercise 3.2
 
@@ -68,7 +68,7 @@ Augment the implementation of the sender side in the rdt2.0 transport protocol i
 
 What could/should the sender do in case a corrupt ACK / NAK segment is received?
 
-Implement your proposed solution and use the `TestRDT2DataAckNakBitErrors.java` to test your solution. You can modify the probability of transmission errors by adjusting the value `CORRUPTPB` in `RDT21DataAckNakBitErrors.java` network model.
+Implement your proposed solution and use the `TestRDT2DataAckNakBitErrors.java` to test your solution. You can modify the probability of transmission errors by adjusting the value `CORRUPTPB` in the `RDT2DataAckNakBitErrors.java` network model. To run the test you will also have to change the cast from `SegmentRDT21` to `SegmentRDT` since otherwise a cast-exception will be raised.
 
 #### Exercise 4 - RDT 2.2 Implementation
 
@@ -78,7 +78,7 @@ The transport receiver of RDT2.1 uses a NAK (negative acknowledgement) to signal
 
 Modify the RDT 2.1 implementation (i.e., the classes `TransportSenderRDT21.java` and `TransportReceiverRDT21.java`) to become an RDT2.2 implementation as described on page 242 in the networking book.
 
-The test `TestRDT21DataAckNakBitErrors.java` can be used to test your protocol implementation.
+The test `TestRDT21DataAckNakBitErrors.java` can be used as a basis to test your protocol implementation.
 
 #### Exercise 5 - Reliable Transport and Overtaking
 
