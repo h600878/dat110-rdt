@@ -8,9 +8,9 @@ To undertake the following exercises it is assumed that you have read pages sect
 
 Start by importing the RDT framework and associated testing project into your IDE (Eclipse):
 
-https://github.com/selabhvl/dat110-rdt
+https://github.com/lmkr/dat110-rdt
 
-https://github.com/selabhvl/dat110-rdt-testing
+https://github.com/lmkr/dat110-rdt-testing
 
 and make sure that the classes and the tests compile.
 
