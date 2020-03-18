@@ -14,6 +14,7 @@ public class RetransmissionTimer {
 		timeout = false;
 	}
 
+	// method used to check whether a timeout has occurred
 	public boolean timeout() {
 		return timeout;
 	}
