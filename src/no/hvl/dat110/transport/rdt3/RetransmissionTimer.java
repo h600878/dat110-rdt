@@ -33,7 +33,7 @@ public class RetransmissionTimer {
 
 		public void run() {
 			System.out.println("[Transport:Sender   ] TIMEOUT");
-			timer.cancel(); // TODO: may not be needed?
+			timer.cancel(); // unclear if actually needed or handled by schedule
 			timeout = true;
 		}
 	}
