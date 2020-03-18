@@ -104,6 +104,6 @@ The `no.hvl.dat110.transport.rdt4` package contains templates for implementing a
 
 The test in `TestRDT4DelayLossyBitErrors.java` can be used to test and run the protocol implementation.
 
-#### Exercise 5: Variant of the RDT4.0 Protocol
+#### Exercise 6: Variant of the RDT4.0 Protocol
 
 Modify the implementation of the receiver side of the RDT4.0 protocol in Exercise 5.2 such that an acknowledgement is only sent if the data segment with the expected sequence number is received. Is the protocol still correct?
