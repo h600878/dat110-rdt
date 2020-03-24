@@ -107,3 +107,11 @@ The test in `TestRDT4DelayLossyBitErrors.java` can be used to test and run the p
 #### Exercise 6: Variant of the RDT4.0 Protocol
 
 Modify the implementation of the receiver side of the RDT4.0 protocol in Exercise 5.2 such that an acknowledgement is only sent if the data segment with the expected sequence number is received. Is the protocol still correct?
+
+#### Exercise 7: Go-back N Protocol
+
+Make an implementation of the Go-Back-N protocol in section 3.4.3 of the networking book. As part of this, you may want to augment `SenderProcess.java` such that additional data is being sent from the sender-side.
+
+#### Exercise 8: Selective-Repeat Protocol
+
+Make an implementation of the Go-Back-N protocol in section 3.4.4 of the networking book. 
