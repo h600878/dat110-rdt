@@ -68,7 +68,9 @@ Augment the implementation of the sender side in the rdt2.0 transport protocol i
 
 What could/should the sender do in case a corrupt ACK / NAK segment is received?
 
-Implement your proposed solution and use the `TestRDT2DataAckNakBitErrors.java` to test your solution. You can modify the probability of transmission errors by adjusting the value `CORRUPTPB` in the `RDT2DataAckNakBitErrors.java` network model. To run the test you will also have to change the cast from `SegmentRDT21` to `SegmentRDT` since otherwise a cast-exception will be raised.
+Implement your proposed solution and use the `TestRDT2DataAckNakBitErrors.java` to test your solution. You can modify the probability of transmission errors by adjusting the value `CORRUPTPB` in the `RDT2DataAckNakBitErrors.java` network model.
+
+To run the test you will also have to change the cast from `SegmentRDT21` to `SegmentRDT2` in `TestRDT2DataAckNakBitErrors.java` since otherwise a cast-exception will be raised.
 
 #### Exercise 4 - RDT 2.2 Implementation
 
@@ -114,4 +116,4 @@ Make an implementation of the Go-Back-N protocol in section 3.4.3 of the network
 
 #### Exercise 8: Selective-Repeat Protocol
 
-Make an implementation of the Go-Back-N protocol in section 3.4.4 of the networking book. 
+Make an implementation of the Go-Back-N protocol in section 3.4.4 of the networking book.
