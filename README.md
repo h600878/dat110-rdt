@@ -70,7 +70,7 @@ What could/should the sender do in case a corrupt ACK / NAK segment is received?
 
 Implement your proposed solution and use the `TestRDT2DataAckNakBitErrors.java` to test your solution. You can modify the probability of transmission errors by adjusting the value `CORRUPTPB` in the `RDT2DataAckNakBitErrors.java` network model.
 
-To run the test you will also have to change the cast from `SegmentRDT21` to `SegmentRDT2` in `TestRDT2DataAckNakBitErrors.java` since otherwise a cast-exception will be raised.
+To run the test you will also have to change the cast from `SegmentRDT21` to `SegmentRDT2` in `RDT2DataAckNakBitErrors.java` since otherwise a cast-exception will be raised.
 
 #### Exercise 4 - RDT 2.2 Implementation
 
