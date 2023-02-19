@@ -2,21 +2,19 @@
 
 This framework has been designed to enable practical experiments and obtaining hands-on experience with implementation of transport layer protocols for reliable data transfer (RDT). The naming scheme used for the packages and the classes follows the naming scheme of the RDT1-4 protocols in the networking book.
 
-To undertake the following exercises it is assumed that you have read pages section 3.4 in the networking book. You may also want to review the lecture notes from the transport layer lectures, in particular the parts that cover the RDT implementation framework.
+To undertake the following exercises it is assumed that you have read section 3.4 in the networking book. You may also want to review the lecture notes from the transport layer lectures, in particular the parts that cover the RDT implementation framework.
 
 #### Exercise 1 - Cloning the RDT Framework
 
-Start by importing the RDT framework and associated testing project into your IDE (Eclipse):
+Start by cloning and importing the RDT framework project into your IDE:
 
 https://github.com/lmkr/dat110-rdt
 
-https://github.com/lmkr/dat110-rdt-testing
-
 and make sure that the classes and the tests compile.
 
-The `rdt-project` is organised into the following packages
+The `dat110-rdt` project is organised into the following packages
 
-- `no.hvl.dat110.application` implements an application-level sender process that sends messages to a receiver applicatiob-level process using the underlying transport protocol implementation.
+- `no.hvl.dat110.application` implements an application-level sender process that sends messages to a receiver application-level process using the underlying transport protocol implementation.
 
 - `no.hvl.dat110.common` contains some common classes for console-logging used in the implementation of the framework. It also contains the `Stopable.java` class which implements a stopable thread-abstraction which is central to the implementation of threads used in the transport protocol entities.
 
@@ -24,7 +22,7 @@ The `rdt-project` is organised into the following packages
 
 - `no.hvl.dat110.network.models` contains classes implementing various network/channel models, including a fully reliable channel, a channel in which DATA segments may be corrupted due to bit errors, a channel in which both DATA and ACK/NAK segments may get corrupted, a lossy channel, and a channel in which overtaking of segments is possible.
 
-- `no.hvl.dat110.transport` contains the base classes for implementing transport protocols for reliable data transfer of segments and defines the basic primitives of `rdt_send`, `deliver_data`, `udt_send`, and `rdt_recv`. See figure 3.8.
+- `no.hvl.dat110.transport` contains the base classes for implementing transport protocols for reliable data transfer of segments and defines the basic primitives of `rdt_send`, `deliver_data`, `udt_send`, and `rdt_recv`. See figure 3.8 in the networking book.
 
 - `no.hvl.dat110.rdt1` contains classes implementing the RDT1 protocol.
 
@@ -36,7 +34,7 @@ The `rdt-project` is organised into the following packages
 
 - `no.hvl.dat110.rdt4` contains classes that can serve as a basis for implementing the RDT4 protocol.
 
-The `rdt-testing project` contains a package `no.hvl.dat110.transport.tests` that implements unit-tests for running and testing the transport protocols. The basic correctness criteria is that the receiver must receive all data sent from the sender and in correct order.
+The test part of the project contains a package `no.hvl.dat110.transport.tests` that implements unit-tests for running and testing the transport protocols. The basic correctness criteria is that the receiver must receive all data sent from the sender and in correct order.
 
 #### Exercise 2 - Basic experiments
 
@@ -52,7 +50,7 @@ Perform the following experiments
 
 #### Exercise 3 - Handling Corrupt ACK/NAK segments
 
-The `RDT2DataBitErrors.java` class implements a network model that at random sets negates the checksum in the transmitted segment thereby simulating a transmission errors. It tests whether the segment being processed by the network is a DATA segment, and only in that case may a negation of the checksum take place.  
+The `RDT2DataBitErrors.java` class implements a network model that at random negates the checksum in the transmitted segment thereby simulating a transmission errors. It tests whether the segment being processed by the network is a DATA segment, and only in that case may a negation of the checksum take place.  
 
 This in turn cause the `doWaiting()` method in `TransportReceiverRDT2.java` to detect that the received segment has a checksum errors and therefore send a NAK segment back to the sender.
 
