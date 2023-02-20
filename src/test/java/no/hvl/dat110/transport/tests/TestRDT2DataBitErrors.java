@@ -1,27 +1,25 @@
 package no.hvl.dat110.transport.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-
 import no.hvl.dat110.network.models.RDT2DataBitErrors;
 import no.hvl.dat110.transport.rdt2.TransportReceiverRDT2;
 import no.hvl.dat110.transport.rdt2.TransportSenderRDT2;
+import org.junit.jupiter.api.Test;
 
 public class TestRDT2DataBitErrors {
 
-	@Test
-	public void test() {
-		
-		TestTransport ts = new TestTransport();
+    @Test
+    public void test() {
 
-		ts.setupNetwork(new RDT2DataBitErrors());
+        TestTransport ts = new TestTransport();
 
-		ts.setupTransport(new TransportSenderRDT2(ts.getNetwork().getSenderService()), 
-				new TransportReceiverRDT2(ts.getNetwork().getReceiverService()));
+        ts.setupNetwork(new RDT2DataBitErrors());
 
-		ts.runTest();
+        ts.setupTransport(new TransportSenderRDT2(ts.getNetwork().getSenderService()),
+                new TransportReceiverRDT2(ts.getNetwork().getReceiverService()));
 
-		ts.assertRDT();
-	}
+        ts.runTest();
+
+        ts.assertRDT();
+    }
 
 }

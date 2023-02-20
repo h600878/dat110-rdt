@@ -4,85 +4,85 @@ import no.hvl.dat110.transport.Segment;
 
 public class SegmentRDT2 extends Segment {
 
-	protected SegmentType type;
-	protected byte checksum;
+    protected SegmentType type;
+    protected byte checksum;
 
-	public SegmentRDT2() {
+    public SegmentRDT2() {
 
-	}
+    }
 
-	public SegmentRDT2(byte[] data) {
-		super(data);
-		this.type = SegmentType.DATA;
-		this.checksum = calcChecksum();
-	}
+    public SegmentRDT2(byte[] data) {
+        super(data);
+        this.type = SegmentType.DATA;
+        this.checksum = calcChecksum();
+    }
 
-	public SegmentRDT2(SegmentType type) {
-		super();
-		this.type = type;
-		this.checksum = 0; // 0 is the correct checksum on ACK and NAK
-	}
+    public SegmentRDT2(SegmentType type) {
+        super();
+        this.type = type;
+        this.checksum = 0; // 0 is the correct checksum on ACK and NAK
+    }
 
-	@Override
-	public SegmentRDT2 clone() {
+    @Override
+    public SegmentRDT2 clone() {
 
-		SegmentRDT2 segment = new SegmentRDT2();
+        SegmentRDT2 segment = new SegmentRDT2();
 
-		if (this.data != null) {
-			segment.data = this.data.clone();
-		}
+        if (this.data != null) {
+            segment.data = this.data.clone();
+        }
 
-		segment.type = this.type;
-		segment.checksum = this.checksum;
+        segment.type = this.type;
+        segment.checksum = this.checksum;
 
-		return segment;
-	}
+        return segment;
+    }
 
-	public boolean isData() {
-		return type == SegmentType.DATA;
-	}
-	
-	public SegmentType getType() {
-		return type;
-	}
+    public boolean isData() {
+        return type == SegmentType.DATA;
+    }
 
-	@Override
-	public String toString() {
+    public SegmentType getType() {
+        return type;
+    }
 
-		String str = type.toString();
+    @Override
+    public String toString() {
 
-		str = str + super.toString();
+        String str = type.toString();
 
-		str = str + "["+ (String.format("%8s", Integer.toBinaryString(checksum & 0xFF).replace(' ', '0'))) + "]";
+        str = str + super.toString();
 
-		return str;
+        str = str + "[" + (String.format("%8s", Integer.toBinaryString(checksum & 0xFF).replace(' ', '0'))) + "]";
 
-	}
+        return str;
 
-	public byte calcChecksum() {
+    }
 
-		byte sum = 0;
+    public byte calcChecksum() {
 
-		if (this.data != null) {
+        byte sum = 0;
 
-			for (int i = 0; i < this.data.length; i++) {
-				sum = (byte) (sum + this.data[i]);
-			}
-		}
+        if (this.data != null) {
 
-		return sum;
-	}
+            for (byte datum : this.data) {
+                sum = (byte) (sum + datum);
+            }
+        }
 
-	public boolean isCorrect() {
-		return (calcChecksum() == this.checksum);
-	}
+        return sum;
+    }
 
-	// used by channel to simulate transmission error
-	public void setChecksum(byte checksum) {
-		this.checksum = checksum;
-	}
-	
-	public byte getChecksum() {
-		return this.checksum;
-	}
+    public boolean isCorrect() {
+        return (calcChecksum() == this.checksum);
+    }
+
+    // used by channel to simulate transmission error
+    public void setChecksum(byte checksum) {
+        this.checksum = checksum;
+    }
+
+    public byte getChecksum() {
+        return this.checksum;
+    }
 }

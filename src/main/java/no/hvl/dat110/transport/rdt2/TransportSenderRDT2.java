@@ -8,107 +8,98 @@ import no.hvl.dat110.transport.*;
 
 public class TransportSenderRDT2 extends TransportSender implements ITransportProtocolEntity {
 
-	public enum RDT2SenderStates {
-		WAITDATA, WAITACKNAK;
-	}
+    public enum RDT2SenderStates {
+        WAITDATA, WAITACKNAK
+    }
 
-	private LinkedBlockingQueue<SegmentRDT2> recvqueue;
-	private RDT2SenderStates state;
+    private final LinkedBlockingQueue<SegmentRDT2> recvqueue;
+    private RDT2SenderStates state;
 
-	public TransportSenderRDT2(NetworkService ns) {
-		super("TransportSender",ns);
-		recvqueue = new LinkedBlockingQueue<SegmentRDT2>();
-		state = RDT2SenderStates.WAITDATA;
-	}
+    public TransportSenderRDT2(NetworkService ns) {
+        super("TransportSender", ns);
+        recvqueue = new LinkedBlockingQueue<>();
+        state = RDT2SenderStates.WAITDATA;
+    }
 
-	public void rdt_recv(Segment segment) {
+    @Override
+    public void rdt_recv(Segment segment) {
 
-		System.out.println("[Transport:Sender   ] rdt_recv: " + segment.toString());
+        System.out.println("[Transport:Sender   ] rdt_recv: " + segment);
 
-		try {
-			
-			recvqueue.put((SegmentRDT2) segment);
-			
-		} catch (InterruptedException ex) {
-			System.out.println("TransportSenderRDT2 thread " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+        try {
+            recvqueue.put((SegmentRDT2) segment);
+        }
+        catch (InterruptedException ex) {
+            System.out.println("TransportSenderRDT2 thread " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 
-	private byte[] data = null;
+    private byte[] data = null;
 
-	public void doProcess() {
+    @Override
+    public void doProcess() {
 
-		switch (state) {
+        switch (state) {
+            case WAITDATA -> doWaitData();
+            case WAITACKNAK -> doWaitAckNak();
+        }
 
-		case WAITDATA:
+    }
 
-			doWaitData();
+    private void changeState(RDT2SenderStates newstate) {
 
-			break;
+        System.out.println("[Transport:Sender   ] " + state + "->" + newstate);
+        state = newstate;
+    }
 
-		case WAITACKNAK:
+    private void doWaitData() {
 
-			doWaitAckNak();
+        try {
 
-			break;
+            data = outdataqueue.poll(2, TimeUnit.SECONDS);
 
-		default:
-			break;
-		}
+            if (data != null) { // Something to send
 
-	}
+                udt_send(new SegmentRDT2(data));
 
-	private void changeState(RDT2SenderStates newstate) {
+                changeState(RDT2SenderStates.WAITACKNAK);
+            }
 
-		System.out.println("[Transport:Sender   ] " + state + "->" + newstate);
-		state = newstate;
-	}
-	
-	private void doWaitData() {
-		
-		try {
-			
-			data = outdataqueue.poll(2, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException ex) {
+            System.out.println("TransportSenderRDT2 thread " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 
-			if (data != null) { // something to send
+    private void doWaitAckNak() {
 
-				udt_send(new SegmentRDT2(data));
+        try {
 
-				changeState(RDT2SenderStates.WAITACKNAK);
-			}
+            SegmentRDT2 acksegment = recvqueue.poll(2, TimeUnit.SECONDS);
 
-		} catch (InterruptedException ex) {
-			System.out.println("TransportSenderRDT2 thread " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+            if (acksegment != null) {
 
-	private void doWaitAckNak() {
-		
-		try {
+                SegmentType type = acksegment.getType();
 
-			SegmentRDT2 acksegment = recvqueue.poll(2, TimeUnit.SECONDS);
+                if (type == SegmentType.ACK) {
 
-			if (acksegment != null) {
+                    System.out.println("[Transport:Sender   ] ACK ");
+                    data = null;
+                    changeState(RDT2SenderStates.WAITDATA);
 
-				SegmentType type = acksegment.getType();
+                }
+                else {
+                    System.out.println("[Transport:Sender   ] NAK ");
+                    udt_send(new SegmentRDT2(data));
+                }
+            }
 
-				if (type == SegmentType.ACK) {
-
-					System.out.println("[Transport:Sender   ] ACK ");
-					data = null;
-					changeState(RDT2SenderStates.WAITDATA);
-					
-				} else {
-					System.out.println("[Transport:Sender   ] NAK ");
-					udt_send(new SegmentRDT2(data));
-				}
-			}
-			
-		} catch (InterruptedException ex) {
-			System.out.println("TransportSenderRDT2 thread " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+        }
+        catch (InterruptedException ex) {
+            System.out.println("TransportSenderRDT2 thread " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 }
