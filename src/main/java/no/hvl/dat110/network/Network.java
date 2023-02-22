@@ -2,50 +2,51 @@ package no.hvl.dat110.network;
 
 public class Network {
 
-	private Channel srchannel, rschannel;
-	private NetworkService srns, rsns;
+    private final Channel srchannel, rschannel;
+    private final NetworkService srns, rsns;
 
-	public Network(IChannelModel chanmodel) {
+    public Network(IChannelModel chanmodel) {
 
-		srchannel = new Channel("S --> R", chanmodel);
-		rschannel = new Channel("R --> S", chanmodel);
+        srchannel = new Channel("S --> R", chanmodel);
+        rschannel = new Channel("R --> S", chanmodel);
 
-		srns = new NetworkService("Channel S->R", rschannel, srchannel);
-		rsns = new NetworkService("Channel R->S", srchannel, rschannel);
-	}
+        srns = new NetworkService("Channel S->R", rschannel, srchannel);
+        rsns = new NetworkService("Channel R->S", srchannel, rschannel);
+    }
 
-	public NetworkService getSenderService() {
-		return srns;
-	}
+    public NetworkService getSenderService() {
+        return srns;
+    }
 
-	public NetworkService getReceiverService() {
-		return rsns;
-	}
+    public NetworkService getReceiverService() {
+        return rsns;
+    }
 
-	public void doRun() {
+    public void doRun() {
 
-		System.out.println("Network starting");
+        System.out.println("Network starting");
 
-		srns.start();
-		rsns.start();
-	}
+        srns.start();
+        rsns.start();
+    }
 
-	public void doStop() {
+    public void doStop() {
 
-		try {
+        try {
 
-			srns.doStop();
-			srns.join();
+            srns.doStop();
+            srns.join();
 
-			rsns.doStop();
-			srns.join();
+            rsns.doStop();
+            srns.join();
 
-		} catch (InterruptedException ex) {
+        }
+        catch (InterruptedException ex) {
 
-			System.out.println("Network thread " + ex.getMessage());
-			ex.printStackTrace();
-		}
-		System.out.println("Network stopping");
-	}
+            System.out.println("Network thread " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        System.out.println("Network stopping");
+    }
 
 }

@@ -7,86 +7,90 @@ import java.util.concurrent.TimeUnit;
 
 public class Channel {
 
-	private LinkedBlockingQueue<Datagram> datagramqueue;
-	private String name;
-	private IChannelModel chanmodel;
+    private final LinkedBlockingQueue<Datagram> datagramqueue;
+    private final String name;
+    private final IChannelModel chanmodel;
 
-	public Channel(String name, IChannelModel chanmodel) {
-		this.name = name;
-		datagramqueue = new LinkedBlockingQueue<Datagram>();
-		this.chanmodel = chanmodel;
-	}
+    public Channel(String name, IChannelModel chanmodel) {
+        this.name = name;
+        datagramqueue = new LinkedBlockingQueue<>();
+        this.chanmodel = chanmodel;
+    }
 
-	public Datagram receive() {
+    public Datagram receive() {
 
-		Datagram data = null;
+        Datagram data = null;
 
-		try {
-			data = datagramqueue.poll(2, TimeUnit.SECONDS);
-		} catch (InterruptedException ex) {
+        try {
+            data = datagramqueue.poll(2, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException ex) {
 
-			System.out.println("Channel receive " + ex.getMessage());
-			ex.printStackTrace();
+            System.out.println("Channel receive " + ex.getMessage());
+            ex.printStackTrace();
 
-		}
+        }
 
-		return data;
-	}
+        return data;
+    }
 
-	class DelayDatagram extends TimerTask {
+    class DelayDatagram extends TimerTask {
 
-		private Datagram datagram;
-        private int delay;
-        
-		public DelayDatagram(Datagram datagram,int delay) {
-			this.datagram = datagram;
-			this.delay = delay;
-		}
+        private final Datagram datagram;
+        private final int delay;
 
-		public void run() {
+        public DelayDatagram(Datagram datagram, int delay) {
+            this.datagram = datagram;
+            this.delay = delay;
+        }
 
-			try {
+        public void run() {
 
-				System.out.println("[Network:" + name + "o   ]" + String.format("%9s"," delay(" + delay + "):") + datagram.toString());
+            try {
 
-				datagramqueue.put(datagram);
+                System.out.println("[Network:" + name + "o   ]" + String.format("%9s", " delay(" + delay + "):") + datagram.toString());
 
-			} catch (InterruptedException ex) {
+                datagramqueue.put(datagram);
 
-				System.out.println("Delay channel run " + ex.getMessage());
-				ex.printStackTrace();
-			}
+            }
+            catch (InterruptedException ex) {
 
-		}
-	}
+                System.out.println("Delay channel run " + ex.getMessage());
+                ex.printStackTrace();
+            }
 
-	public void transmit(Datagram datagram) {
+        }
+    }
 
-		if (datagram != null) {
-			datagram = chanmodel.process(name, datagram);
-		}
+    public void transmit(Datagram datagram) {
 
-		if (datagram != null) {
+        if (datagram != null) {
+            datagram = chanmodel.process(name, datagram);
+        }
 
-			int delay = chanmodel.delay();
+        if (datagram != null) {
 
-			if (delay > 0) {
+            int delay = chanmodel.delay();
 
-				Timer timer = new Timer();
-				timer.schedule(new DelayDatagram(datagram,delay), delay);
+            if (delay > 0) {
 
-			} else {
+                Timer timer = new Timer();
+                timer.schedule(new DelayDatagram(datagram, delay), delay);
 
-				try {
+            }
+            else {
 
-					datagramqueue.put(datagram);
+                try {
 
-				} catch (InterruptedException ex) {
+                    datagramqueue.put(datagram);
 
-					System.out.println("Delay channel send " + ex.getMessage());
-					ex.printStackTrace();
-				}
-			}
-		}
-	}
+                }
+                catch (InterruptedException ex) {
+
+                    System.out.println("Delay channel send " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
 }

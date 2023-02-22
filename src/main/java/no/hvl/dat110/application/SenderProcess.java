@@ -6,32 +6,32 @@ import no.hvl.dat110.transport.TransportSender;
 
 public class SenderProcess {
 
-	private ArrayList<byte[]> datasent;
-	private TransportSender transport;
+    private final ArrayList<byte[]> datasent;
+    private final TransportSender transport;
 
-	public SenderProcess(TransportSender transport) {
-		this.transport = transport;
-		datasent = new ArrayList<byte[]>();
-	}
+    public SenderProcess(TransportSender transport) {
+        this.transport = transport;
+        datasent = new ArrayList<>();
+    }
 
-	public ArrayList<byte[]> getDatasent() {
-		return datasent;
-	}
+    public ArrayList<byte[]> getDatasent() {
+        return datasent;
+    }
 
-	public void doRun() {
+    public void doRun() {
 
-		for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
 
-			String message = "Message " + (Integer.toString(i));
+            String message = "Message " + (i);
 
-			System.out.println("[App:SenderProcess  ] rdt_send: " + "[" + message + "]");
+            System.out.println("[App:SenderProcess  ] rdt_send: " + "[" + message + "]");
 
-			byte[] data = message.getBytes();
-			
-			transport.rdt_send(data);
-			
-			datasent.add(data);
-		}
-	}
+            byte[] data = message.getBytes();
+
+            transport.rdt_send(data);
+
+            datasent.add(data);
+        }
+    }
 
 }

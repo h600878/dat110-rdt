@@ -6,24 +6,24 @@ import no.hvl.dat110.transport.TransportReceiver;
 
 public class ReceiverProcess {
 
-	private ArrayList<byte[]> datarecv;
+    private final ArrayList<byte[]> datarecv;
 
-	public ReceiverProcess(TransportReceiver transport) {
-		transport.register(this);
-		datarecv = new ArrayList<byte[]>();
+    public ReceiverProcess(TransportReceiver transport) {
+        transport.register(this);
+        datarecv = new ArrayList<byte[]>();
 
-	}
+    }
 
-	public ArrayList<byte[]> getDatarecv() {
-		return datarecv;
-	}
+    public ArrayList<byte[]> getDatarecv() {
+        return datarecv;
+    }
 
-	public void deliver_data(byte[] data) {
+    public void deliver_data(byte[] data) {
 
-		datarecv.add(data);
+        datarecv.add(data);
 
-		String message = new String(data);
+        String message = new String(data);
 
-		System.out.println("[App:ReceiverProcess] dlv_data: " + "[" + message + "]");
-	}
+        System.out.println("[App:ReceiverProcess] dlv_data: " + "[" + message + "]");
+    }
 }
