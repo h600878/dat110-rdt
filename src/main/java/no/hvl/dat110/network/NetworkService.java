@@ -5,7 +5,14 @@ import no.hvl.dat110.transport.*;
 
 public class NetworkService extends Stopable {
 
-    private final Channel chanin, chanout;
+    /**
+     * Kanal for å sende datagrammer
+     */
+    private final Channel chanin;
+    /**
+     * Kanal for å motta datagrammer
+     */
+    private final Channel chanout;
     private ITransportProtocolEntity transport;
 
     public NetworkService(String name, Channel chin, Channel chout) {

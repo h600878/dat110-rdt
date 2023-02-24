@@ -7,29 +7,33 @@ import no.hvl.dat110.transport.*;
 
 public class TransportSenderRDT1 extends TransportSender implements ITransportProtocolEntity {
 
-	public TransportSenderRDT1(NetworkService ns) {
-		super("TransportSender",ns);
-	}
-		
-	public void rdt_recv(Segment segment) {
+    public TransportSenderRDT1(NetworkService ns) {
+        super("TransportSender", ns);
+    }
 
-		// do not do anything in the basic transport sender entity
-	}
+    @Override
+    public void rdt_recv(Segment segment) {
+        // do not do anything in the basic transport sender entity
+    }
 
-	public void doProcess() {
+    @Override
+    public void doProcess() {
 
-		try {
-			
-			byte[] data = outdataqueue.poll(2, TimeUnit.SECONDS);
+        try {
 
-			if (data != null) {
-				udt_send(new Segment(data));
-			}
+            // Venter i opptil 2 sekunder på at det skal komme data fra applikasjonslaget
+            byte[] data = outdataqueue.poll(2, TimeUnit.SECONDS);
 
-		} catch (InterruptedException ex) {
-			System.out.println("Transport sender RDT1 thread " + ex.getMessage());
-			ex.printStackTrace();
-		}
+            // Hvis det er data, sender vi det videre til nettverkslaget
+            if (data != null) {
+                udt_send(new Segment(data));
+            }
 
-	}
+        }
+        catch (InterruptedException ex) {
+            System.out.println("Transport sender RDT1 thread " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+    }
 }

@@ -30,6 +30,5 @@ public class RDTLossy implements IChannelModel {
         }
 
         return datagram;
-
     }
 }

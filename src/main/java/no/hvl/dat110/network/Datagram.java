@@ -4,7 +4,7 @@ import no.hvl.dat110.transport.Segment;
 
 public class Datagram {
 
-    private Segment segment;
+    private final Segment segment;
 
     public Datagram(Segment segment) {
         this.segment = segment;

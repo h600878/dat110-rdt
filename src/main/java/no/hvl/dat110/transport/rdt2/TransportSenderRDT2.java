@@ -47,8 +47,11 @@ public class TransportSenderRDT2 extends TransportSender implements ITransportPr
 
     }
 
+    /**
+     * Endrer tilstand til newstate
+     * @param newstate ny tilstand
+     */
     private void changeState(RDT2SenderStates newstate) {
-
         System.out.println("[Transport:Sender   ] " + state + "->" + newstate);
         state = newstate;
     }

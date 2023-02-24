@@ -51,8 +51,9 @@ public class SegmentRDT2 extends Segment {
 
         String str = type.toString();
 
-        str = str + super.toString();
+        str += super.toString();
 
+        // Hexadecimal 0xFF to decimal 255
         str = str + "[" + (String.format("%8s", Integer.toBinaryString(checksum & 0xFF).replace(' ', '0'))) + "]";
 
         return str;
@@ -77,7 +78,9 @@ public class SegmentRDT2 extends Segment {
         return (calcChecksum() == this.checksum);
     }
 
-    // used by channel to simulate transmission error
+    /**
+     * Used by channel to simulate transmission error
+     */
     public void setChecksum(byte checksum) {
         this.checksum = checksum;
     }

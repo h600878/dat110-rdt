@@ -7,6 +7,9 @@ import no.hvl.dat110.transport.TransportSender;
 public class SenderProcess {
 
     private final ArrayList<byte[]> datasent;
+    /**
+     * The transport layer sender
+     */
     private final TransportSender transport;
 
     public SenderProcess(TransportSender transport) {

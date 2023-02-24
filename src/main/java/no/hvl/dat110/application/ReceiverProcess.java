@@ -8,9 +8,13 @@ public class ReceiverProcess {
 
     private final ArrayList<byte[]> datarecv;
 
+    /**
+     * @param transport The transport layer receiver
+     */
     public ReceiverProcess(TransportReceiver transport) {
+        // Regisrerer seg selv som mottaker av data
         transport.register(this);
-        datarecv = new ArrayList<byte[]>();
+        datarecv = new ArrayList<>();
 
     }
 
